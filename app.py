@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from models.user import User
 from database import db
-from flask_login import LoginManager, login_user, current_user
+from flask_login import LoginManager, login_required, login_user, current_user, logout_user
 
 
 app = Flask(__name__)
@@ -30,9 +30,15 @@ def login():
         if user and user.password == password:
             login_user(user)
             print(current_user.is_authenticated)
-            return jsonify({"message": "ok"}), 200
+            return jsonify({"message": "Logged in"}), 200
     
     return jsonify({"message": "Invalid username or password"}), 400
+
+@app.route('/logout', methods=["GET"])
+@login_required
+def logout():
+    logout_user()
+    return jsonify({"message": "Logged out"})
 
 @app.route("/hello-world", methods=["GET"])
 def hello_world():
