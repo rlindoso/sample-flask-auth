@@ -1,3 +1,4 @@
+from bcrypt import checkpw, hashpw, gensalt
 from flask import Flask, jsonify, request
 from models.user import User
 from database import db
@@ -26,8 +27,10 @@ def login():
 
     if username and password:
         user = User.query.filter_by(username=username).first()
+        passwd = str.encode(password)
+        usr_passwd = str.encode(user.password)
 
-        if user and user.password == password:
+        if user and checkpw(passwd, usr_passwd):
             login_user(user)
             return jsonify({"message": "Logged in"}), 200
     
@@ -47,7 +50,8 @@ def create_user():
     password = data.get("password")
 
     if username and password:
-        user = User(username=username, password=password)
+        hashed_password = hashpw(password.encode('utf8'), gensalt())
+        user = User(username=username, password=hashed_password.decode('utf8'))
         db.session.add(user)
         db.session.commit()
 
@@ -74,7 +78,8 @@ def update_user(id_user):
     data = request.json
     user = db.session.get(ident=id_user, entity=User)
     if user:
-        user.password = data.get("password")
+        hashed_password = hashpw(data.get("password").encode('utf8'), gensalt())
+        user.password = hashed_password.decode('utf8')
         db.session.commit()
         return {"message": f"User {user.username} updated"}
 
