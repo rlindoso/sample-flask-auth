@@ -1,0 +1,15 @@
+version: '3'
+
+services:  
+  db_postgres:
+    image: postgres:latest
+    container_name: db_postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/postgres/:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=flask-crud
