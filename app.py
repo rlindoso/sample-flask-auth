@@ -6,7 +6,7 @@ from flask_login import LoginManager, login_required, login_user, current_user, 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "your_secret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://admin:123456@localhost:5432/flask-crud"
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -68,9 +68,11 @@ def get_user(id_user):
 @app.route('/user/<int:id_user>', methods=["PUT"])
 @login_required
 def update_user(id_user):
+    if id_user != current_user.id and current_user.role != 'admin':
+        return jsonify({"message": "Operation not permitted"}), 403
+
     data = request.json
     user = db.session.get(ident=id_user, entity=User)
-
     if user:
         user.password = data.get("password")
         db.session.commit()
@@ -81,6 +83,9 @@ def update_user(id_user):
 @app.route('/user/<int:id_user>', methods=["DELETE"])
 @login_required
 def delete_user(id_user):
+    if current_user.role != 'admin':
+        return jsonify({"message": "Operation not permitted"}), 403
+    
     user = db.session.get(ident=id_user, entity=User)
 
     if id_user == current_user.id:
