@@ -1,7 +1,7 @@
 from bcrypt import checkpw
-from flask import jsonify
 from flask_login import login_user
 from src.modules.users.repositories.user_repository_interface import UserRepositoryInterface
+from src.shared.errors.error_types.http_bad_request import HttpBadRequestError
 
 class RequestInterface:
     username: str
@@ -22,5 +22,5 @@ class AuthenticateUserService():
         if user and passwd == usr_passwd:
             # login_user(user)
             return {"message": "Logged in"}
-    
-        return {"message": "Invalid username or password"}
+        
+        raise HttpBadRequestError("Invalid username or password")
