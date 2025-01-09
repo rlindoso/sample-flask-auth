@@ -7,3 +7,14 @@ class UserRepositoryInterface(ABC):
     def find_user_by_username(self, username: str) -> User:
         pass
 
+    @abstractmethod
+    def create_user(self, user: User) -> User:
+        pass
+
+    @abstractmethod
+    def update_user(self, user: User) -> User:
+        pass
+
+    @abstractmethod
+    def delete_user(self, user_id: int) -> None:
+        pass

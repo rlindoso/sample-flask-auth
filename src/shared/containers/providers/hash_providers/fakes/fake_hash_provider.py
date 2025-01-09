@@ -3,7 +3,7 @@ from src.shared.containers.providers.hash_providers.models.hash_provider_interfa
 
 class FakeHashProvider(HashProviderInterface):
     def generate_hash(self, payload: str) -> str:
-        return f"pyload_hashed_{payload}"
+        return f"payload_hashed_{payload}"
 
     def compare_hash(self, payload: str, hashed: str) -> bool:
-        return (str.encode(f"pyload_hashed_{payload.decode('utf8')}") == hashed)
+        return (f"payload_hashed_{payload}" == hashed)
