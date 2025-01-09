@@ -1,6 +1,7 @@
 from bcrypt import checkpw
 from flask_login import login_user
 from src.modules.users.repositories.user_repository_interface import UserRepositoryInterface
+from src.shared.containers.providers.hash_providers.models.hash_provider_interface import HashProviderInterface
 from src.shared.errors.error_types.http_bad_request import HttpBadRequestError
 
 class RequestInterface:
@@ -9,8 +10,9 @@ class RequestInterface:
 
 
 class AuthenticateUserService():
-    def __init__(self, user_repository: UserRepositoryInterface):
+    def __init__(self, user_repository: UserRepositoryInterface, hash_provider: HashProviderInterface):
         self.user_repository = user_repository
+        self.hash_provider = hash_provider
     
     def execute(self, username: str, password: str):
         if username and password:
@@ -18,8 +20,7 @@ class AuthenticateUserService():
             passwd = str.encode(password)
             usr_passwd = str.encode(user.password)
 
-        # if user and checkpw(passwd, usr_passwd):
-        if user and passwd == usr_passwd:
+        if user and self.hash_provider.compare_hash(passwd, usr_passwd):
             # login_user(user)
             return {"message": "Logged in"}
         
