@@ -11,13 +11,13 @@ class UserRepository(UserRepositoryInterface):
     def find_user_by_username(self, username: str) -> User:
         with self.__db_connection as database:
             try:
-                person = (
+                user = (
                     database.session
                         .query(User)
                         .filter(User.username == username)
                         .one()
                 )
-                return person
+                return user
             except NoResultFound:
                 return None
 

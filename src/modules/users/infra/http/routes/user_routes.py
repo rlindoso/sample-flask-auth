@@ -13,3 +13,8 @@ def login():
 def create_user():
     users_controller = UsersController()
     return users_controller.create(request)
+
+@user_route_bp.route('/user/<string:username>', methods=["GET"])
+def get_user(username):
+    users_controller = UsersController()
+    return users_controller.show(request)
