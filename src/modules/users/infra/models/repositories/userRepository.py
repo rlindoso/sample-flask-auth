@@ -1,3 +1,4 @@
+from sqlalchemy import update
 from src.modules.users.infra.models.user import User
 from sqlalchemy.orm.exc import NoResultFound
 from src.modules.users.repositories.user_repository_interface import UserRepositoryInterface
@@ -20,6 +21,17 @@ class UserRepository(UserRepositoryInterface):
                 return user
             except NoResultFound:
                 return None
+            
+    def find_user_by_id(self, user_id: int) -> User:
+        with self.__db_connection as database:
+            try:
+                user = (
+                    database.session
+                        .get(ident=user_id, entity=User)
+                )
+                return user
+            except NoResultFound:
+                return None
 
     def create_user(self, user: User) -> User:
         username = user.username
@@ -37,8 +49,14 @@ class UserRepository(UserRepositoryInterface):
     def update_user(self, user: User) -> User:
         with self.__db_connection as database:
             try:
-                user
+                stmt = (
+                    update(User)
+                    .where(User.id == user.id)
+                    .values(user.to_dict())
+                )
+                database.session.execute(stmt)
                 database.session.commit()
+                return user                
             except Exception as exception:
                 database.session.rollback()
                 raise exception

@@ -8,6 +8,12 @@ class UserRepositoryFake(UserRepositoryInterface):
         self.users: List[User] = []
         self.id = 0
 
+    def find_user_by_id(self, user_id: int) -> User:
+        for user in self.users:
+            if user.id == user_id:
+                return user
+        return None  # Return None if the user is not found
+
     def find_user_by_username(self, username: str) -> User:
         for user in self.users:
             if user.username == username:
@@ -23,7 +29,7 @@ class UserRepositoryFake(UserRepositoryInterface):
     def update_user(self, user: User) -> User:
         for repo_user in self.users:
             if repo_user.id == user.id:
-                repo_user.update(user)
+                repo_user = user
                 return repo_user
         return None
 

@@ -8,6 +8,10 @@ class UserRepositoryInterface(ABC):
         pass
 
     @abstractmethod
+    def find_user_by_id(self, user_id: int) -> User:
+        pass
+
+    @abstractmethod
     def create_user(self, user: User) -> User:
         pass
 

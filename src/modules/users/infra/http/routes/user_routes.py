@@ -18,3 +18,8 @@ def create_user():
 def get_user(username):
     users_controller = UsersController()
     return users_controller.show(request)
+
+@user_route_bp.route('/user/<int:user_id>', methods=["PUT"])
+def update_user(user_id):
+    users_controller = UsersController()
+    return users_controller.update(request)
