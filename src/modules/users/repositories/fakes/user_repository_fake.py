@@ -33,5 +33,5 @@ class UserRepositoryFake(UserRepositoryInterface):
                 return repo_user
         return None
 
-    def delete_user(self, user_id: int) -> None:
-        self.users = [user for user in self.users if user.id != user_id]
+    def delete_user(self, user: User) -> None:
+        self.users = [user_repo for user_repo in self.users if user_repo.id != user.id]

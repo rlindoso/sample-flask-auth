@@ -1,6 +1,7 @@
 from flask import jsonify
 from src.modules.users.infra.models.repositories.userRepository import UserRepository
 from src.modules.users.services.create_user_service import CreateUserService
+from src.modules.users.services.delete_user_service import DeleteUserService
 from src.modules.users.services.show_user_by_username_service import ShowUserByUsernameService
 from src.modules.users.services.update_user_service import UpdateUserService
 from src.shared.containers.providers.hash_providers.implementations.bcrypt_hash_provider import BCryptHashProvider
@@ -37,4 +38,12 @@ class UsersController:
         
         show_user_by_username_service = ShowUserByUsernameService(user_repository=user_repository)
         return jsonify(show_user_by_username_service.execute(username).to_dict())
+        
+    def delete(self, http_request: HttpRequest) -> HttpResponse:
+        user_id = http_request.view_args["user_id"]
+
+        user_repository = UserRepository(db_connection_handler)
+        
+        delete_user_service = DeleteUserService(user_repository=user_repository)
+        return jsonify(delete_user_service.execute(user_id=user_id).__dict__)
     

@@ -61,13 +61,12 @@ class UserRepository(UserRepositoryInterface):
                 database.session.rollback()
                 raise exception
 
-    def delete_user(self, user_id: int) -> None:
+    def delete_user(self, user: User) -> None:
         with self.__db_connection as database:
             try:
                 (
                     database.session
-                        .get(user_id)
-                        .delete()
+                        .delete(user)
                 )
                 database.session.commit()
             except Exception as exception:

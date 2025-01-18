@@ -20,5 +20,5 @@ class UserRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def delete_user(self, user_id: int) -> None:
+    def delete_user(self, user: User) -> None:
         pass

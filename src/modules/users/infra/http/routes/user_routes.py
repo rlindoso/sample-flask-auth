@@ -23,3 +23,8 @@ def get_user(username):
 def update_user(user_id):
     users_controller = UsersController()
     return users_controller.update(request)
+
+@user_route_bp.route('/user/<int:user_id>', methods=["DELETE"])
+def delete_user(user_id):
+    users_controller = UsersController()
+    return users_controller.delete(request)
