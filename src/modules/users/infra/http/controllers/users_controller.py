@@ -19,7 +19,7 @@ class UsersController:
         hash_Provider = BCryptHashProvider()
         
         create_user_service = CreateUserService(user_repository=user_repository, hash_provider=hash_Provider)
-        return jsonify(create_user_service.execute(username, password).to_dict())
+        return jsonify(create_user_service.execute(username, password).to_dict()), 201
     
     def update(self, http_request: HttpRequest) -> HttpResponse:
         user_id = http_request.view_args["user_id"]
@@ -29,7 +29,7 @@ class UsersController:
         hash_Provider = BCryptHashProvider()
         
         update_user_service = UpdateUserService(user_repository=user_repository, hash_provider=hash_Provider)
-        return jsonify(update_user_service.execute(user_id=user_id, password=password).to_dict())
+        return jsonify(update_user_service.execute(user_id=user_id, password=password).to_dict()), 201
     
     def show(self, http_request: HttpRequest) -> HttpResponse:
         username = http_request.view_args["username"]
@@ -37,7 +37,7 @@ class UsersController:
         user_repository = UserRepository(db_connection_handler)
         
         show_user_by_username_service = ShowUserByUsernameService(user_repository=user_repository)
-        return jsonify(show_user_by_username_service.execute(username).to_dict())
+        return jsonify(show_user_by_username_service.execute(username).to_dict()), 201
         
     def delete(self, http_request: HttpRequest) -> HttpResponse:
         user_id = http_request.view_args["user_id"]
@@ -45,5 +45,5 @@ class UsersController:
         user_repository = UserRepository(db_connection_handler)
         
         delete_user_service = DeleteUserService(user_repository=user_repository)
-        return jsonify(delete_user_service.execute(user_id=user_id).__dict__)
+        return jsonify(delete_user_service.execute(user_id=user_id).__dict__), 200
     

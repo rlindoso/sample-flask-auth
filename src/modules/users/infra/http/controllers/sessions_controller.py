@@ -16,5 +16,5 @@ class SessionsController:
         hash_Provider = BCryptHashProvider()
         
         authenticate_user_service = AuthenticateUserService(user_repository=user_repository, hash_provider=hash_Provider)
-        return jsonify(authenticate_user_service.execute(username, password))
+        return jsonify(authenticate_user_service.execute(username, password)), 201
     
