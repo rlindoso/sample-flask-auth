@@ -1,5 +1,5 @@
 from pytest import raises
-from models.user import User
+from src.modules.users.infra.models.user import User
 from src.modules.users.repositories.fakes.user_repository_fake import UserRepositoryFake
 from src.modules.users.services.delete_user_service import DeleteUserService
 

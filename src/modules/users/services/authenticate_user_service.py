@@ -1,5 +1,4 @@
 from typing import Dict
-from flask_login import login_user
 from src.modules.users.repositories.user_repository_interface import UserRepositoryInterface
 from src.shared.containers.providers.hash_providers.models.hash_provider_interface import HashProviderInterface
 from src.shared.errors.error_types.http_bad_request import HttpBadRequestError

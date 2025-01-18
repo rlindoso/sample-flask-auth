@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_login import LoginManager
 from src.shared.infra.http.routes.routes import register_routes
 from src.shared.infra.database.connection import db_connection_handler
 
