@@ -1,6 +1,6 @@
 from flask_login import login_user
-from models.user import User
 from src.modules.users.infra.models.repositories.userRepository import UserRepository
+from src.modules.users.infra.models.user import User
 from src.modules.users.services.authenticate_user_service import AuthenticateUserService
 from src.shared.containers.providers.hash_providers.implementations.bcrypt_hash_provider import BCryptHashProvider
 from src.shared.infra.http.http_types.http_request import HttpRequest
