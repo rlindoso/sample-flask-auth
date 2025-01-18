@@ -15,7 +15,6 @@ class AuthenticateUserService():
             user = self.user_repository.find_user_by_username(username=username)
 
         if user and self.hash_provider.compare_hash(password, user.password):
-            # login_user(user)
-            return {"message": "Logged in"}
+            return user
         
         raise HttpBadRequestError("Invalid username or password")

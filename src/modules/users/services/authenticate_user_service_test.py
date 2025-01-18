@@ -14,8 +14,8 @@ def test_login():
     user_repository.users.append(user)
 
     authenticate_user_service = AuthenticateUserService(user_repository=user_repository, hash_provider=hash_provider)
-    result = authenticate_user_service.execute(user.username, "123456")
-    assert result == {'message': 'Logged in'}
+    user_logged = authenticate_user_service.execute(user.username, "123456")
+    assert user == user_logged
 
 def test_failure():
     user_repository = UserRepositoryFake()

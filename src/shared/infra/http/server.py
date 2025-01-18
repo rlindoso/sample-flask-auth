@@ -11,8 +11,4 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = "your_secret_key"
 CORS(app)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
-
 register_routes(app)
