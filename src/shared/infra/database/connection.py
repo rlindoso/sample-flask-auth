@@ -1,9 +1,10 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 class DBConnectionHandler:
     def __init__(self) -> None:
-        self.__connection_string = "postgresql://admin:123456@localhost:5432/flask-crud"
+        self.__connection_string = os.getenv("DATABASE_URL", "postgresql://admin:123456@localhost:5432/flask-crud")
         self.__engine = None
         self.session = None
 

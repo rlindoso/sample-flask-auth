@@ -13,3 +13,13 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=123456
       - POSTGRES_DB=flask-crud
+
+  app_flask:
+    build: .
+    container_name: app_flask
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=your_secret_key
+      - DATABASE_URL=postgresql://admin:123456@db_postgres:5432/flask-crud
