@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String
 from src.shared.infra.database.base import Base
 
 class User(Base, UserMixin):
-    __tablename__ = "user"
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     username = Column(String(80), nullable=False, unique=True)
     password = Column(String, nullable=False)

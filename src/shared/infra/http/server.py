@@ -1,6 +1,6 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask
-from flask.cli import load_dotenv
 from flask_cors import CORS
 from src.shared.infra.http.routes.routes import register_routes
 from src.shared.infra.database.connection import db_connection_handler
