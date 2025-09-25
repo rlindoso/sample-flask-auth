@@ -171,3 +171,9 @@ cython_debug/
 .pypirc
 
 docker/
+
+htmlcov/
+allure-results/
+.coverage
+report.html
+.DS_Store
